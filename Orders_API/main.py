@@ -12,6 +12,10 @@ mysql_adapter = SqlAlchemyOrderAdapter(configuration)
 
 order_service = OrderService(mysql_adapter)
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({'message': 'health check'})
+
 @app.route('/create_order', methods=['POST'])
 def create_order():
     try:
