@@ -205,8 +205,6 @@ CREATE DATABASE inventory;
 Create the Ordes table
 
 ```
-
-Now, connect to the AppTier EC2 instance again. We will install all the necessary components to run our backend application.
 use inventory;
 
 CREATE TABLE Orders (
