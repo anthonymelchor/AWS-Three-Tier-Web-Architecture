@@ -205,6 +205,8 @@ CREATE DATABASE inventory;
 Create the Ordes table
 
 ```
+
+Now, connect to the AppTier EC2 instance again. We will install all the necessary components to run our backend application.
 use inventory;
 
 CREATE TABLE Orders (
@@ -238,6 +240,85 @@ In the folder where you cloned the repository, navigate to the Orders_API/config
 - Specify the database field with the name of your database.
 - Once you've updated these values in the config.py file, save the changes.
 
-NOTE: This is NOT considered a best practice, and is done for the simplicity of the hands-on. Moving these credentials to a more suitable place like Secrets Manager
+NOTE: Please remember that what we're doing here, putting these credentials directly into the code, is not the best way to do it. We're doing it this way just to keep things simple for this exercise. In real projects, it's better to store these credentials in a more secure place like Secrets Manager.
+
+Now, upload the 'Orders_API' folder to the S3 bucket created earlier
+
+![36](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/fd7e7d66-4178-430f-925d-7e3ca296415c)
+
+Connect to the AppTier EC2 instance again through Session Manager. We will install all the necessary components to run our backend application.
+
+```
+pip3 install gunicorn
+pip3 install flask
+pip3 install SQLAlchemy
+sudo yum install python3-devel mysql-devel gcc python3-pip -y
+pip3 install mysqlclient
+```
+
+We will download the code of our backend application to the instance. Please replace "bucket-name" with your actual bucket name.
+
+```
+cd ~/
+aws s3 cp s3://aws3tier-bucket/Orders_API/ Orders_API --recursive
+```
+
+We will create a systemd service unit to start our app and ensure that the app starts automatically when the EC2 instance is restarted.
+
+Create a .service file in the /etc/systemd/system/ directory. 
+
+```
+sudo nano /etc/systemd/system/Orders_API.service
+```
+
+In the file, define the service unit:
+
+```
+[Unit]
+Description=Order_API
+After=network.target
+
+[Service]
+User=ec2-user
+WorkingDirectory=/home/ec2-user/Orders_API
+ExecStart=/home/ec2-user/.local/bin/gunicorn -w 4 -b 0.0.0.0:8000 main:app
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Save and close the file.
+
+Start the service and enable it to start on boot
+
+```
+sudo systemctl start Orders_API
+sudo systemctl enable Orders_API
+```
+
+Verify that your service is running. You should see the status as "active."
+
+```
+sudo systemctl status your-app
+```
+
+Execute the following code to test the connection to the database: 
+
+```
+curl http://localhost:8000/list_orders
+```
+
+You should get a response like the one below, which indicates that the configuration of your app, networking, and database configuration is working successfully.
+
+```
+[{"id":1,"orderDate":"2023-09-01","productDescription":"Notebook","quantity":"5","totalPrice":"50.00"}]
+```
+
+
+
+
+
+
+
 
 
