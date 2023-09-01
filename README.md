@@ -312,11 +312,23 @@ You should get a response like the one below, which indicates that the configura
 [{"id":1,"orderDate":"2023-09-01","productDescription":"Notebook","quantity":"5","totalPrice":"50.00"}]
 ```
 
+## Internal Load Balancing and Auto Scaling
 
+### Creating an Image
 
+Now we will create an AMI from our AppTier instance. This will help us parameterize an auto-scaling group and the internal load balancer of the architecture to create a highly scalable system.
 
+- We return to the list of instances, select the checkbox for the AppTier instance, open the actions menu, choose "Image and Templates," and then select "Create Image."
 
+![37](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/a30f364a-d055-4328-aa85-fbc88930d74c)
 
+Add a name and click and click on the Create Image button.
 
+![38](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/e0c8a184-c706-44fc-b8a9-028514e9b4f5)
 
+### Creating a Target Group
+
+Go to the left menu, select "Target Groups," and then click on the "Create Target Group" button.
+
+In the "Target Type" option, choose "Instances," give the target group a name, select "HTTP" protocol, set the port to 8000 (since this is the port our app is listening on), and select the VPC created for this practice
 
