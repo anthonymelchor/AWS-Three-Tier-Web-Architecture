@@ -157,6 +157,87 @@ Now we will go to the "Databases" option in the left menu and click on the "Crea
 
 ![26](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/d102a87d-36c6-49cd-8002-9b6170d37e16)
 
+### Creating an instance for the app tier
 
+Go to the EC2 service in the console, select "Instances," and then choose "Launch Instances"
+
+Add an instance name and select the Amazon Linux 2 AMI image
+
+![31](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/748bb358-0be8-4ffe-a1a7-3e6a469673aa)
+
+For instance type, select t2.micro, proceed without a key pair, select the VPC created for this hands-on, choose one of the subnets created for the application layer, and select the security group also created for this layer.
+
+![32](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/983aaf98-4941-477b-92a7-f3c416d99865)
+
+In advanced details, select the initially created role and then click on launch instance.
+
+![33](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/3babc74b-4866-4116-bb78-99e7554b9c13)
+
+### Connect to the instance and configure the Database
+
+Now, go to the list of instances in the console, click the checkbox of the instance you just created, and then click the "connect" button.
+
+![34](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/0f16b163-755a-4063-ab9e-56aaacd551ad)
+
+In the next screen, click on the Session Manager tab, and then click the "connect" button.
+
+![35](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/3d7a7f3c-22c9-4dd6-ab1a-70acda83ebc1)
+
+- download the MySQL CLI
+
+```
+sudo -su ec2-user
+sudo yum install mysql -y
+```
+
+Connect to the Aurora RDS writer instance created earlier by typing the username and then the password through the command line. Remember that this username and password data are the ones configured at the moment of creating the RDS instance.
+
+```
+mysql -h YOUR-RDS-ENDPOINT -u YOUR-USER-NAME -p
+```
+
+Creating  the database.
+
+```
+CREATE DATABASE inventory;
+```
+
+Create the Ordes table
+
+```
+use inventory;
+
+CREATE TABLE Orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productDescription VARCHAR(255),
+    quantity VARCHAR(20),
+    totalPrice VARCHAR(20),
+    orderDate VARCHAR(20)
+);
+```
+
+Insert a record into the newly created table.
+
+```
+INSERT INTO Orders (productDescription, quantity, totalPrice, orderDate)
+VALUES ('Notebook', '5', '50.00', '2023-09-01');
+```
+
+Verify that the data has been inserted successfully and then exit the MySQL client.
+
+```
+SELECT * FROM Orders;
+```
+
+### Configuring the APP instance
+
+In the folder where you cloned the repository, navigate to the Orders_API/config.py file. In this file, you must provide the following information:
+
+- Fill in the user and password fields with the credentials you configured for your RDS Aurora database.
+- Set the host field to the endpoint of your RDS writer instance.
+- Specify the database field with the name of your database.
+- Once you've updated these values in the config.py file, save the changes.
+
+NOTE: This is NOT considered a best practice, and is done for the simplicity of the hands-on. Moving these credentials to a more suitable place like Secrets Manager
 
 
