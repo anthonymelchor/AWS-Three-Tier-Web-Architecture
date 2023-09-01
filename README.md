@@ -3,6 +3,31 @@
 ### Overview
 This architecture is composed of three layers: the web layer, the application layer, and the data layer. A user-facing application load balancer will be exposed, which will send the traffic to the EC2 instances of the web layer. The web layer contains a React application running on an Nginx web server. Traffic from the web layer is sent to the backend application layer through an internal load balancer. The backend application is a microservice developed in Python, running on a WSGI Gunicorn application server. The application layer interacts with the database layer, which contains an instance of Aurora MySQL. This architecture is executed in a VPC that has 2 public subnet. Its access to the internet will be through an internet gateway, and there are also 4 private subnets. All of the above exists in two availability zones.
 
+## Setting up some details
+
+- First, clone the project code from the repository
+```
+git clone https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture.git
+```
+Create an S3 bucket that will be used later in this hands-on.
+- Go to the S3 service in the console and create a new bucket and add a name for the bucket
+
+![27](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/e86c9536-02c4-4e22-bb20-59277d20a71e)
+
+Now, we will create a role that includes policies allowing EC2 instances to download the source code of the applications and use Systems Manager Session Manager for a secure connection.
+
+- Select "EC2" as the use case
+
+![28](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/3dbbed2d-3873-43e0-b20f-375c27616b03)
+
+In the "Add permissions" option, type 'AmazonSSMManagedInstanceCore' and 'AmazonS3ReadOnlyAccess' in the search box, and select both policies.
+
+![29](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/68099f77-2577-4e82-a859-9ccb41bda4f1)
+
+- Add a name to the role and click on create role
+
+![30](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/c372bb99-4665-4969-b5b6-87ae86f15292)
+
 ## VPC and Subnets
 
 ### Creating VPC
