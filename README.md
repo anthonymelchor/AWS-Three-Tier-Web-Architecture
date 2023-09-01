@@ -297,7 +297,7 @@ sudo systemctl enable Orders_API
 Verify that your service is running. You should see the status as "active."
 
 ```
-sudo systemctl status your-app
+sudo systemctl status Orders_API
 ```
 
 Execute the following code to test the connection to the database: 
