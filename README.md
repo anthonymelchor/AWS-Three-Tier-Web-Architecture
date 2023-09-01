@@ -109,4 +109,29 @@ Finally, we will create the security group for our data layer. In this group, we
 
 ![19](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/bf423118-a381-445c-8032-559345e75731)
 
+### Configurating Database
+
+Go to the RDS service and select the "Subnet Groups" option from the left menu. Then, click on the "Create DB Subnet Group" button.
+Add a name, select the VPC we have been working with, add the Availability Zones (AZs), and choose the subnets created for the data layer.
+
+![20](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/80e3bb2a-9f73-482d-aee3-4c4f07fe9b0c)
+
+Now we will go to the "Databases" option in the left menu and click on the "Create Database" button. Set up the database creation parameters as demonstrated in the images below.
+
+![21](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/1ed894a6-a091-453a-9490-4ced2d826e47)
+
+![22](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/fecbaf8d-5dc1-4b60-abbc-af01ddaea90d)
+
+![23](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/4d5042da-fdd8-44dc-952e-305889f79172)
+
+![24](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/d07daa37-00b3-4349-b440-91b0be080f42)
+
+![25](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/4ac5f81a-b649-42a4-be50-b9ba2f140ea6)
+
+ Once your database has been created, you should see something like the following: one instance to write data and one instance to read data, both in different availability zones. Please note the endpoint of the writer instance. It will be used later.
+
+![26](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/d102a87d-36c6-49cd-8002-9b6170d37e16)
+
+
+
 
