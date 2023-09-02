@@ -354,6 +354,40 @@ Configure the security group created for the internal load balancer. Allow traff
 
 ![44](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/b682826f-d482-41e6-91ed-98d7d245343c)
 
+### Creating Launch template
 
+In the left menu select Launch templates and then click on Create launch template
+Add a name for the template. In the "Application and OS images" section, go to the "My AMIs" tab, and click on "Owned by me." Then, select the image created earlier.
+
+![45](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/a57911ab-8677-4b4f-b2f6-7b4ce0da97cf)
+
+In the "Instance Type" section, select t2.micro. We will not include a key pair, and no subnet is selected since the network configuration will be set in the auto-scaling group. 
+
+![46](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/70601931-4a6f-4e91-bff8-4980c3bbc8b5)
+
+In the advanced details section, select the role created at the beginning of this hands-on. Click Create launch template.
+
+![51](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/0d0729b8-6633-42ab-b350-019f283e1c74)
+
+### Creating Auto Scaling Group
+
+Go to the left menu, select "Auto Scaling Groups," and click on "Create Auto Scaling Group"
+Add a name for the auto scaling group and select the previously created template. Click next.
+
+![47](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/f0f2b662-69b5-4d24-968e-5ddc58984b1d)
+
+Select the aws3tier VPC we have created, and choose the private subnets for the application layer.
+
+![48](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/41a4de20-242d-419e-96c2-6964ba61ebc0)
+
+In the advanced configuration options step, select the "Attach to an existing load balancer" option. Click on "Choose from your load balancer target groups" and select the target group we created for the application layer.
+
+![49](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/72b79186-dbea-44cc-a645-18755db8fbac)
+
+Set the group size as follows:
+
+![50](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/c02d3b09-53e3-4558-8eed-aa25fcedf63c)
+
+Leave the "Add notifications" and "Add tags" steps with the default configuration, and then click on "Create Auto Scaling group".
 
 
