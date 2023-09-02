@@ -134,7 +134,7 @@ Finally, we will create the security group for our data layer. In this group, we
 
 ![19](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/bf423118-a381-445c-8032-559345e75731)
 
-### Configurating Database
+## Configurating Database
 
 Go to the RDS service and select the "Subnet Groups" option from the left menu. Then, click on the "Create DB Subnet Group" button.
 Add a name, select the VPC we have been working with, add the Availability Zones (AZs), and choose the subnets created for the data layer.
