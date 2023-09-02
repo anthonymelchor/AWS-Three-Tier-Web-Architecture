@@ -157,7 +157,7 @@ Now we will go to the "Databases" option in the left menu and click on the "Crea
 
 ![26](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/d102a87d-36c6-49cd-8002-9b6170d37e16)
 
-### Creating an instance for the app tier
+## Creating an instance for the app tier
 
 Go to the EC2 service in the console, select "Instances," and then choose "Launch Instances"
 
@@ -229,7 +229,7 @@ Verify that the data has been inserted successfully and then exit the MySQL clie
 SELECT * FROM Orders;
 ```
 
-## Configuring the APP instance
+### Configuring the APP instance
 
 In the folder where you cloned the repository, navigate to the Orders_API/config.py file. In this file, you must provide the following information:
 
