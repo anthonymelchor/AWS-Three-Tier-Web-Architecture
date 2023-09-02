@@ -229,7 +229,7 @@ Verify that the data has been inserted successfully and then exit the MySQL clie
 SELECT * FROM Orders;
 ```
 
-### Configuring the APP instance
+## Configuring the APP instance
 
 In the folder where you cloned the repository, navigate to the Orders_API/config.py file. In this file, you must provide the following information:
 
