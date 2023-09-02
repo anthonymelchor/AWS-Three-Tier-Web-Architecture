@@ -332,3 +332,28 @@ Go to the left menu, select "Target Groups," and then click on the "Create Targe
 
 In the "Target Type" option, choose "Instances," give the target group a name, select "HTTP" protocol, set the port to 8000 (since this is the port our app is listening on), and select the VPC created for this practice
 
+![39](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/e9248250-e386-4fba-8861-a83e91764260)
+
+ - In the "Health Checks" option, choose the HTTP protocol and type '/health' in the health check path. This is the health check endpoint of the app. Click "Next."
+ - Skip registering targets and click on "Create Target Group".
+
+### Creating the Internal Load Balancer
+
+ - Click on the "Load Balancers" menu, and then select "Create Load Balancer"
+ - Select the application load balancer
+
+![41](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/aa6e15cb-11ad-4a9c-a758-2f1597890248)
+
+ Add a name to the load balancer and select the internal scheme.
+
+![42](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/d8a9b782-9549-4f9c-a1ff-e74e8f7f634f)
+
+![43](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/b1faea9a-1c0c-475f-96c7-64c1b5964c26)
+
+Configure the security group created for the internal load balancer. Allow traffic on the HTTP protocol and port 80, and select the target group created above. Click on the button Create load balancer.
+
+![44](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/b682826f-d482-41e6-91ed-98d7d245343c)
+
+
+
+
