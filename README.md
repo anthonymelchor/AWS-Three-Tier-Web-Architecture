@@ -390,4 +390,71 @@ Set the group size as follows:
 
 Leave the "Add notifications" and "Add tags" steps with the default configuration, and then click on "Create Auto Scaling group".
 
+## Creating an instance for the web tier
+
+- Modify the nginx.conf file located in the root of the folder that was cloned at the start of this project. Replace [AWS-INTERNAL-LB-DNS] with the DNS of your internal load balancer.
+- Upload the 'myapp' folder that was cloned from the repository and the modified nginx.conf file to our S3 bucket.
+- Now you must perform the same steps that we followed to create an instance for the web tier. When selecting the subnet, you must choose one of the public subnets, select the VPC we have been working with, activate auto-assign public IP, and choose the role we created at the beginning.
+
+![52](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/fd22e504-4603-409d-a91d-94ac648afeff)
+
+Connect to the AppTier EC2 instance again through Session Manager. We will install all the necessary components to run our web application created in Node.js.
+
+Install NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install 19
+nvm use 19
+```
+We will download the code of our backend application to the instance. Please replace "bucket-name" with your actual bucket name.
+
+```
+cd ~/
+aws s3 cp s3://aws3tier-bucket/myapp/ myapp --recursive
+```
+
+Go to the 'myapp' folder and execute the command to to Build the App and Publish It.
+
+```
+cd ~/web-tier
+npm install 
+npm run build
+```
+
+We will use Nginx as the web server for our application.
+
+```
+sudo amazon-linux-extras install nginx1 -y
+```
+
+We go to the location of the nginx folder and replace the configuration file created by default, by ours
+
+```
+cd /etc/nginx
+sudo rm nginx.conf
+sudo aws s3 cp s3://aws3tier-bucket/nginx.conf .
+```
+
+restart the nginx service
+
+```
+sudo service nginx restart
+```
+
+we assign permissions to nginx so that it can access the files
+
+```
+chmod -R 755 /home/ec2-user
+```
+
+We ensure that the service runs at instance startup.
+
+```
+sudo chkconfig nginx on
+```
+
+
+
+
 
