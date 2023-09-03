@@ -390,6 +390,8 @@ Set the group size as follows:
 
 Leave the "Add notifications" and "Add tags" steps with the default configuration, and then click on "Create Auto Scaling group".
 
+After following all these steps, the load balancer and autoscaling group are configured correctly. Two new instances should be reflected in the instances menu of the console.
+
 ## Creating an instance for the web tier
 
 - Modify the nginx.conf file located in the root of the folder that was cloned at the start of this project. Replace [AWS-INTERNAL-LB-DNS] with the DNS of your internal load balancer.
@@ -482,9 +484,83 @@ ________________________________________________________________________________
 
 ![55](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/8f1af05c-785b-495a-9f28-6a55f262c744)
 
+## External Load Balancing and Auto Scaling
 
+### Creating an Image
 
+Now we will create an AMI from our WebTier instance.
+Go to the list of instances, select the checkbox for the WebTier instance, open the actions menu, choose "Image and Templates," and then select "Create Image."
 
+![56](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/5ed6d813-ab63-4484-90da-347427600e4e)
 
+Add a name and click and click on the Create Image button.
+
+![57](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/00b15663-237e-49b0-bd28-b6d1dba03692)
+
+### Creating a Target Group
+Go to the left menu, select "Target Groups," and then click on the "Create Target Group" button.
+
+In the "Target Type" option, choose "Instances," give the target group a name, select "HTTP" protocol, set the port to 80 (since this is the port Nginx is listening on), and select the VPC created for this practice
+
+![58](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/5d0ddc15-0bbb-40eb-94a4-6a5e0f3bfd5f)
+
+In the "Health Checks" option, choose the HTTP protocol and type '/health' in the health check path. Click "Next".
+Skip registering targets and click on "Create Target Group".
+
+### Creating the Internal Load Balancer
+
+Click on the "Load Balancers" menu, and then select "Create Load Balancer"
+Select the application load balancer
+
+![59](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/774838a3-413e-4ba9-802d-260b6b513f31)
+
+Add a name to the load balancer and select the internet-facing scheme.
+
+![60](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/41fc236d-7cf0-46af-933b-b0f3aa028786)
+
+![61](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/a063aab6-257c-4f7d-94f3-1c9acdcbb976)
+
+Configure the security group created for the external load balancer. Allow traffic on the HTTP protocol and port 80, and select the target group created above. Click on the button Create load balancer.
+
+![62](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/f1c00b2f-1666-4a06-b100-7b67897772a5)
+
+### Creating Launch template
+In the left menu select Launch templates and then click on Create launch template Add a name for the template. In the "Application and OS images" section, go to the "My AMIs" tab, and click on "Owned by me." Then, select the image created earlier.
+
+![63](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/4b206ec7-4b25-4d5b-b65e-d202f5fb2722)
+
+In the "Instance Type" section, select t2.micro. We will not include a key pair, and no subnet is selected since the network configuration will be set in the auto-scaling group.
+
+![64](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/feca1940-d750-43bc-b3ed-ff1b4667e22f)
+
+In the advanced details section, select the role created at the beginning of this hands-on. Click Create launch template.
+
+![65](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/855985da-b5bb-48db-ab16-5c6d93145d84)
+
+### Creating Auto Scaling Group
+
+Go to the left menu, select "Auto Scaling Groups," and click on "Create Auto Scaling Group" Add a name for the auto scaling group and select the previously created template. Click next.
+
+![66](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/10231a14-5069-4258-b985-1286283fc56c)
+
+Select the aws3tier VPC we have created, and choose the public subnets for the web layer.
+
+![67](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/afe124e9-e921-418e-ae0e-f61497d27687)
+
+In the advanced configuration options step, select the "Attach to an existing load balancer" option. Click on "Choose from your load balancer target groups" and select the target group we created for the web layer.
+
+![68](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/072a5472-f482-412e-a842-f96c94aa9031)
+
+Set the group size as follows:
+
+![69](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/1f65d3aa-b995-4141-aaea-8ed1982d035e)
+
+Leave the "Add notifications" and "Add tags" steps with the default configuration, and then click on "Create Auto Scaling group".
+
+After following all these steps, the load balancer and autoscaling group are configured correctly. Two new instances should be reflected in the instances menu of the console.
+
+Finally, our architecture has been completely configured. To test its correct operation, go to the "Load Balancer" menu, select the "webtier-internet-facing-lb" load balancer, and obtain the DNS name. Paste the DNS name into your browser.
+
+![70](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/5e3b37ec-be89-4583-9aef-3eb188e34b29)
 
 
