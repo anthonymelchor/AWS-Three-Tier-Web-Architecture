@@ -561,7 +561,7 @@ After following all these steps, the load balancer and autoscaling group are con
 
 Finally, our architecture has been completely configured. To test its correct operation, go to the "Load Balancer" menu, select the "webtier-internet-facing-lb" load balancer, and obtain the DNS name. Paste the DNS name into your browser.
 
-![70](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/5e3b37ec-be89-4583-9aef-3eb188e34b29)
+![70](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/f25db5e9-de9a-403f-8601-c1886fecb0c0)
 
 ## Conclusion
 
