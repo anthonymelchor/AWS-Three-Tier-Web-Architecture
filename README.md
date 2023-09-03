@@ -398,15 +398,33 @@ Leave the "Add notifications" and "Add tags" steps with the default configuratio
 
 ![52](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/fd22e504-4603-409d-a91d-94ac648afeff)
 
-Connect to the AppTier EC2 instance again through Session Manager. We will install all the necessary components to run our web application created in Node.js.
+Connect to the AppTier EC2 instance through Session Manager. We will install all the necessary components to run our web application created in Node.js.
 
-Install NVM
+Install node version manager (nvm) by typing the following at the command line.
+
 ```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-source ~/.bashrc
-nvm install 19
-nvm use 19
+sudo -su ec2-user 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
+
+Activate nvm by typing the following at the command line.
+
+```
+. ~/.nvm/nvm.sh
+```
+
+Use nvm to install the latest version of Node.js by typing the following at the command line.
+
+```
+nvm install --lts
+```
+
+Install Node.js 
+
+```
+nvm install 16
+```
+
 We will download the code of our backend application to the instance. Please replace "bucket-name" with your actual bucket name.
 
 ```
@@ -417,7 +435,7 @@ aws s3 cp s3://aws3tier-bucket/myapp/ myapp --recursive
 Go to the 'myapp' folder and execute the command to to Build the App and Publish It.
 
 ```
-cd ~/web-tier
+cd myapp/
 npm install 
 npm run build
 ```
