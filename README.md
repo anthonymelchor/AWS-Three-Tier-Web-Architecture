@@ -398,6 +398,8 @@ Leave the "Add notifications" and "Add tags" steps with the default configuratio
 
 ![52](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/fd22e504-4603-409d-a91d-94ac648afeff)
 
+![53](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/a4193c42-cf70-4f75-8e40-289d0ce762a5)
+
 Connect to the AppTier EC2 instance through Session Manager. We will install all the necessary components to run our web application created in Node.js.
 
 Install node version manager (nvm) by typing the following at the command line.
@@ -471,6 +473,16 @@ We ensure that the service runs at instance startup.
 ```
 sudo chkconfig nginx on
 ```
+
+Go to the details tab of the previously created instance, copy the public ip, go to your browser of choice, paste the IP and if you have followed all the steps correctly you should see the successful execution of our application, consult the order created as an example and add orders.
+
+![54](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/88a708c2-fe66-44c2-8f80-b99f6cd2d26e)
+
+_______________________________________________________________________________________________________________________________
+
+![55](https://github.com/anthonymelchor/AWS-Three-Tier-Web-Architecture/assets/48603061/8f1af05c-785b-495a-9f28-6a55f262c744)
+
+
 
 
 
